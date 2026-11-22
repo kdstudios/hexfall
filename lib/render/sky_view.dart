@@ -186,12 +186,12 @@ class _SkyPainter extends CustomPainter {
 
     // Parallax from the camera's orientation: nearer layers move more.
     final m = c.camera.matrix;
-    final yaw = math.atan2(m[2], m[8]);
-    final pitch = math.asin(m[5].clamp(-1.0, 1.0).toDouble());
-    final px = yaw * size.width * 0.045;
-    final py = pitch * size.height * 0.045;
+    // Use matrix terms directly (view-space position of the planet's Z axis):
+    // smooth and bounded, unlike atan2/asin which wrap or flip near the poles.
+    final px = m[2] * size.width * 0.05;
+    final py = m[5] * size.height * 0.05;
 
-    _cover(canvas, size, SkyAssets.stars[r.stars], Offset(px * 0.6 + t * 1.1, py * 0.6), 1.12, BlendMode.plus, 0.85);
+    _cover(canvas, size, SkyAssets.stars[r.stars], Offset(px * 0.6 + math.sin(t * 0.05) * 8, py * 0.6), 1.12, BlendMode.plus, 0.85);
     _cover(
       canvas,
       size,
@@ -202,7 +202,7 @@ class _SkyPainter extends CustomPainter {
       0.95,
       tint: Color.lerp(const Color(0xFFFFFFFF), atmo, 0.22),
     );
-    _cover(canvas, size, SkyAssets.stars[1 - r.stars], Offset(px * 1.7 - t * 2.0, py * 1.7), 1.22, BlendMode.plus, 0.55);
+    _cover(canvas, size, SkyAssets.stars[1 - r.stars], Offset(px * 1.7 - math.sin(t * 0.07) * 10, py * 1.7), 1.22, BlendMode.plus, 0.55);
 
     _giant(canvas, size, r, t, Offset(px * 1.35, py * 1.35));
     if (!calm) _shootingStars(canvas, size, t);
