@@ -354,6 +354,7 @@ class SettingsPanel extends StatelessWidget {
           _switch('Tile thickness', 'Raised tile sides near the edge of the planet', st.depthWalls, (v) => _apply(st.copyWith(depthWalls: v))),
           _switch('Edge highlights', 'Soft glints on tile edges facing the sun', st.depthEdges, (v) => _apply(st.copyWith(depthEdges: v))),
           _switch('Plate relief', 'Extra bevel and depth in the tile artwork', st.depthRelief, (v) => _apply(st.copyWith(depthRelief: v))),
+          _switch('Animated sky', 'Nebulae, gas giants, rings and shooting stars behind the planet', st.animatedSky, (v) => _apply(st.copyWith(animatedSky: v))),
           if (showLab) ...[
             _heading('Developer'),
             SciFiButton(

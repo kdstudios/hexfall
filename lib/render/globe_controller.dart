@@ -10,6 +10,7 @@ import '../core/planet/planet_environment.dart';
 import '../persistence/models.dart';
 import '../theme/hexfall_theme.dart';
 import 'globe_camera.dart';
+import 'sky_assets.dart';
 import 'globe_renderer.dart';
 import 'glyph_cache.dart';
 import 'tile_atlas.dart';
@@ -80,6 +81,9 @@ class GlobeController extends ChangeNotifier {
     TileAtlas.load().then((_) {
       if (!_disposed) _repaint();
     });
+    SkyAssets.load().then((_) {
+      if (!_disposed) _repaint();
+    });
     _build(frequency);
   }
 
@@ -123,6 +127,11 @@ class GlobeController extends ChangeNotifier {
   bool depthWalls = true;
   bool depthEdges = true;
   bool depthRelief = true;
+  bool animatedSky = true;
+
+  /// True when the animated sky is drawn behind the globe (the painter then
+  /// skips its own flat backdrop).
+  bool get skyActive => animatedSky && SkyAssets.ready;
 
   /// 0 = low, 1 = medium, 2 = high.
   int get qualityLevel => switch (_userQuality) {
@@ -598,6 +607,7 @@ class GlobeController extends ChangeNotifier {
     depthWalls = s.depthWalls;
     depthEdges = s.depthEdges;
     depthRelief = s.depthRelief;
+    animatedSky = s.animatedSky;
     if (s.reducedMotion) autoRotate = false;
     _applyQuality();
     if (s.palette != _palette) {

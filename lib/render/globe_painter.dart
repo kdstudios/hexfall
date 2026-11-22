@@ -91,13 +91,16 @@ class GlobePainter extends CustomPainter {
     }
 
     // Space, nebulae, stars and the ringed giant.
-    if (_bgPic == null || _bgSize != size || _bgAtmo != atmo) {
-      _bgPic?.dispose();
-      _bgPic = _record((cv) => _recordBackdrop(cv, size, atmo));
-      _bgSize = size;
-      _bgAtmo = atmo;
+    // (When the animated sky is active it sits underneath this canvas.)
+    if (!c.skyActive) {
+      if (_bgPic == null || _bgSize != size || _bgAtmo != atmo) {
+        _bgPic?.dispose();
+        _bgPic = _record((cv) => _recordBackdrop(cv, size, atmo));
+        _bgSize = size;
+        _bgAtmo = atmo;
+      }
+      canvas.drawPicture(_bgPic!);
     }
-    canvas.drawPicture(_bgPic!);
 
     // Atmosphere halo, hologram base rings and the dark planet body.
     final radiusKey = (radius * 2).round() / 2;

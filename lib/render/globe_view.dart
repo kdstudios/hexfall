@@ -7,6 +7,7 @@ import 'package:flutter/scheduler.dart';
 
 import 'globe_controller.dart';
 import 'globe_painter.dart';
+import 'sky_view.dart';
 
 /// The interactive planet. Handles every input method with raw pointer events
 /// so we can reliably tell these apart:
@@ -410,7 +411,11 @@ class _GlobeViewState extends State<GlobeView> with SingleTickerProviderStateMix
             ),
           ),
         );
-        return widget.interactive ? view : IgnorePointer(child: view);
+        final front = widget.interactive ? view : IgnorePointer(child: view);
+        return Stack(
+          fit: StackFit.expand,
+          children: [SkyView(controller: _c), front],
+        );
       },
     );
   }

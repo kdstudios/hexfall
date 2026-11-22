@@ -189,3 +189,15 @@ reference unzipper in a Python port.
 - Wall thickness fades in smoothly between facing 0.86 and 0.64 (was an on/off switch at 0.82);
   walls are drawn **before** the tile mesh so neighbouring tops cover them instead of leaving
   dark slabs; edge glints fade between facing 0.12 and 0.45.
+
+## V10 – Animated sky
+
+- New `SkyView` (own ticker, own RepaintBoundary, ~30 fps, 4 fps in reduced motion) sits under `GlobeView`
+  so the planet's frame loop never redraws space. Layers: star layer, nebula (frames of your five videos),
+  second star layer, rotating gas giant with optional ring, procedural shooting stars.
+- Parallax comes from the camera orientation (yaw/pitch); nearer layers move more.
+- Gas giant = orthographic hemisphere mesh with scrolling texture coordinates (`ImageShader` repeat in X),
+  limb darkening + night side overlay. Rings are drawn in two halves (behind / in front of the giant).
+- Each world type picks its nebula/giant/ring (`SkyRecipe.forWorld`), with a little seeded variety in position.
+- Assets: `assets/backgrounds/*.webp` (~1.8 MB total). If they fail to load the old procedural backdrop is used.
+- Settings: "Animated sky" switch. Not compiled or run here; the shipped preview is a Python mock-up.

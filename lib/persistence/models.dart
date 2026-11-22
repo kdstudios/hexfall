@@ -27,6 +27,7 @@ class Settings {
     this.depthWalls = true,
     this.depthEdges = true,
     this.depthRelief = true,
+    this.animatedSky = true,
   });
 
   /// Strength of the terrain colour on hidden / scanned tiles (0 = plain metal).
@@ -56,6 +57,7 @@ class Settings {
   final bool depthWalls;
   final bool depthEdges;
   final bool depthRelief;
+  final bool animatedSky;
 
   Settings copyWith({
     double? masterVolume,
@@ -77,6 +79,7 @@ class Settings {
     bool? depthWalls,
     bool? depthEdges,
     bool? depthRelief,
+    bool? animatedSky,
   }) =>
       Settings(
         masterVolume: masterVolume ?? this.masterVolume,
@@ -98,6 +101,7 @@ class Settings {
         depthWalls: depthWalls ?? this.depthWalls,
         depthEdges: depthEdges ?? this.depthEdges,
         depthRelief: depthRelief ?? this.depthRelief,
+        animatedSky: animatedSky ?? this.animatedSky,
       );
 
   Map<String, Object?> toJson() => {
@@ -120,6 +124,7 @@ class Settings {
         'dWalls': depthWalls,
         'dEdges': depthEdges,
         'dRelief': depthRelief,
+        'sky': animatedSky,
       };
 
   factory Settings.fromJson(Map<String, Object?> j) {
@@ -151,6 +156,7 @@ class Settings {
       depthWalls: bol('dWalls', d.depthWalls),
       depthEdges: bol('dEdges', d.depthEdges),
       depthRelief: bol('dRelief', d.depthRelief),
+      animatedSky: bol('sky', d.animatedSky),
     );
   }
 }
