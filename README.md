@@ -7,41 +7,44 @@ hexagons, `10n²+2` cells).
 Dependencies: Flutter plus two plugins — `shared_preferences` (saves) and
 `audioplayers` (sound) and `file_picker` (sound import/export). All support Android, iOS and Web.
 
-> **Status:** all code was written without a Flutter SDK available, so it has not yet
-> been compiled or run on any device. See `docs/DECISIONS.md` for what is verified.
+## Play in the browser
 
-## Run it (step by step)
+Every push to `main` is built and published to GitHub Pages by
+`.github/workflows/deploy.yml`:
+
+**https://YOUR-USERNAME.github.io/YOUR-REPO-NAME/**
+
+One-time setup: on GitHub open **Settings → Pages → Build and deployment → Source** and
+choose **GitHub Actions**. Then open the **Actions** tab to watch the first build (about
+3-5 minutes). Saves are stored in the browser (local storage), so they stay per browser and
+are lost if site data is cleared.
+
+> **Status:** the code has not been compiled on a developer machine yet; the Actions build
+> is the first real compile. If it fails, open the failed run and copy the error text.
+
+## Run it locally
 
 You need Flutter installed (`flutter doctor` should run in a terminal).
 
-1. **Create a fresh Flutter project** (this generates the Android / iOS / web folders):
+1. Generate the platform folders once (existing files are kept):
 
    ```
-   flutter create hexfall --platforms=android,ios,web
-   cd hexfall
+   flutter create . --platforms=android,ios,web --project-name hexfall
    ```
 
-2. **Copy this project's files over it.** From this zip, replace/copy into the new folder:
-   - `lib/`  (delete the generated one first)
-   - `test/` (delete the generated one first — its `widget_test.dart` refers to an app that no longer exists)
-   - `pubspec.yaml`
-   - `analysis_options.yaml`
-   - `docs/`, `README.md`
+   then delete the generated `test/widget_test.dart` (it refers to a default app that does not exist here).
 
-3. **Install and test:**
+2. Install, test and run:
 
    ```
    flutter pub get
    flutter test
-   ```
-
-4. **Run in the browser:**
-
-   ```
    flutter run -d chrome --web-port=8080
    ```
 
    Or on a connected phone / emulator: `flutter run`.
+
+3. Release build for the web: `flutter build web --release --base-href "/YOUR-REPO-NAME/"`.
 
 ## What's in the game
 
