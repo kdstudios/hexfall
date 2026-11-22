@@ -1,0 +1,25 @@
+name: hexfall
+description: HEXFALL - a 3D geodesic hexagonal Minesweeper set on alien worlds.
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^2.2.0
+  audioplayers: ^6.0.0
+  file_picker: '>=8.1.0 <9.0.0'
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/audio/
+    - assets/tiles/
